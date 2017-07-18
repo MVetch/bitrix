@@ -1,0 +1,399 @@
+
+
+/* Start:/bitrix/templates/.default/components/bitrix/menu/catalog_vertical1/style.css?15001164971632*/
+html, body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* define a fixed width for the entire menu */
+.navigation {
+  width: 300px;
+}
+
+/* reset our lists to remove bullet points and padding */
+.mainmenu, .submenu, .thirdMenuMain, .thirdmenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* make ALL links (main and submenu) have padding and background color */
+.mainmenu a {
+  display: block;
+  background-color: #CCC;
+  text-decoration: none;
+  padding: 10px;
+  color: #000;
+}
+
+/* add hover behaviour */
+.mainmenu a:hover {
+    background-color: #C5C5C5;
+}
+
+/* when hovering over a .mainmenu item,
+  display the submenu inside it.
+  we're changing the submenu's max-height from 0 to 200px;
+*/
+
+.mainmenu li:hover .submenu {
+  display: block;
+  max-height: 200px;
+}
+
+.thirdMenuMain:hover .thirdmenu {
+  display: block;
+  max-height: 200px;
+}
+
+/*
+  we now overwrite the background-color for .submenu links only.
+  CSS reads down the page, so code at the bottom will overwrite the code at the top.
+*/
+
+.submenu a {
+  background-color: #aaa;
+	padding-left: 20px;
+}
+
+/* hover behaviour for links inside .submenu */
+.submenu a:hover {
+  background-color: #999;
+}
+
+/* this is the initial state of all submenus.
+  we set it to max-height: 0, and hide the overflowed content.
+*/
+.submenu {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: all 0.5s ease-out;
+}
+
+
+.thirdmenu a {
+  background-color: #999;
+	padding-left: 40px;
+}
+
+/* hover behaviour for links inside .submenu */
+.thirdmenu a:hover {
+  background-color: #777;
+}
+.thirdmenu {
+  overflow: hidden;
+  max-height: 0;
+  -webkit-transition: all 0.5s ease-out;
+}
+/* End */
+
+
+/* Start:/bitrix/templates/.default/components/bitrix/menu/catalog_vertical1/themes/blue/colors.min.css?1500109471498*/
+.bx_vertical_menu_advanced.bx_blue{border-left:7px solid #e4f0f7;background:#f6f9fb}.bx_vertical_menu_advanced.bx_blue .bx_hma_one_lvl .bx_children_container .bx_children_block li.parent>a{color:#20394c}.bx_vertical_menu_advanced.bx_blue .bx_hma_one_lvl .bx_children_container .bx_children_block li.parent>a:hover{color:#366181}.bx_vertical_menu_advanced.bx_blue .bx_hma_one_lvl .bx_children_container .bx_children_block li.parent ul a:hover{background:#f0f6f8;box-shadow:inset 0 1px 1px 0 #e3e9eb}
+/* End */
+
+
+/* Start:/bitrix/components/bitrix/catalog.sections.top/templates/.default/style.css?1499763929110*/
+.catalog-price {
+	 color:red;
+}
+div.catalog-sections-top table td {
+	padding-right:10px;
+	padding-top:10px;
+}
+
+/* End */
+
+
+/* Start:/bitrix/components/bitrix/catalog.section.list/templates/.default/style.css?14997639297305*/
+/* line */
+.bx_catalog_line{margin-bottom: 30px;}
+.bx_catalog_line .bx_catalog_line_category_title{
+	padding-bottom: 14px;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 24px;
+}
+.bx_catalog_line .bx_catalog_line_category_title a{
+	color: #000;
+	text-decoration: none;
+}
+
+.bx_catalog_line .bx_catalog_line_ul{padding: 0;}
+.bx_catalog_line .bx_catalog_line_ul li{
+	margin-bottom: 20px;
+	list-style: none;
+}
+.bx_catalog_line .bx_catalog_line_ul li:before {content: '' !important}
+
+.bx_catalog_line .bx_catalog_line_img{
+	position: relative;
+	display: block;
+	float: left;
+	overflow: hidden;
+	margin-right: 40px;
+	width: 125px;
+	height: 125px;
+	border:1px solid #ccc;
+	border-radius: 2px;
+			background-position: center;
+			background-repeat: no-repeat;
+	-webkit-background-size:contain;
+			background-size:contain;
+}
+
+.bx_catalog_line .bx_catalog_line_title{
+	margin-bottom: 10px;
+	padding: 0;
+	vertical-align: top;
+	line-height: 18px;
+}
+.bx_catalog_line .bx_catalog_line_title a{
+	color: #4c7da6;
+	font-size: 18px;
+}
+.bx_catalog_line .bx_catalog_line_title a:hover{text-decoration: none;}
+.bx_catalog_line .bx_catalog_line_title span{font-size: 16px}
+.bx_catalog_line .bx_catalog_line_description{
+	color: #3f3f3f;
+	font-size: 13px;
+	line-height: 16px;
+}
+
+
+@media (max-width:639px) {
+	.bx-touch .bx_catalog_line .bx_catalog_line_img{
+		margin-right: 10px;
+		width: 50px;
+		height: 50px;
+	}
+
+	.bx-touch .bx_catalog_line .bx_catalog_line_title{
+		margin-bottom: 5px;
+		line-height: 14px;
+	}
+	.bx-touch .bx_catalog_line .bx_catalog_line_title a{font-size: 14px;}
+	.bx-touch .bx_catalog_line .bx_catalog_line_description{font-size: 11px;}
+}
+
+
+
+.bx_catalog_line .bx_catalog_line_img,
+.bx_catalog_line .bx_catalog_line_title,
+.bx_catalog_line .bx_catalog_line_title a,
+.bx_catalog_line .bx_catalog_line_description{
+	-webkit-transition: all 0.3s ease;
+	   -moz-transition: all 0.3s ease;
+	    -ms-transition: all 0.3s ease;
+	     -o-transition: all 0.3s ease;
+	 		transition: all 0.3s ease;
+}
+
+/* text */
+.bx_catalog_text{margin-bottom: 30px;}
+.bx_catalog_text .bx_catalog_text_category_title{
+	padding-bottom: 14px;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 24px;
+}
+.bx_catalog_text .bx_catalog_text_category_title a{
+	color: #000;
+	text-decoration: none;
+}
+
+.bx_catalog_text .bx_catalog_text_ul{padding: 0;}
+.bx_catalog_text .bx_catalog_text_ul li{
+	float: left;
+	margin: 0 10px 10px;
+	list-style: none;
+}
+.bx_catalog_text .bx_catalog_text_ul li:before {content: '' !important}
+.bx_catalog_text .bx_catalog_text_title{
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	line-height: 14px;
+}
+.bx_catalog_text .bx_catalog_text_title a{
+	color: #4c7da6;
+	white-space: nowrap;
+	font-size: 14px;
+}
+.bx_catalog_text .bx_catalog_text_title a:hover{text-decoration: none}
+.bx_catalog_text .bx_catalog_text_title span{font-size: 12px;}
+
+@media (max-width:639px) {
+	.bx-touch .bx_catalog_text .bx_catalog_line_title{
+		margin-bottom: 5px;
+		line-height: 12px;
+	}
+	.bx-touch .bx_catalog_text .bx_catalog_line_title a{font-size: 12px;}
+}
+
+	.bx_catalog_text .bx_catalog_line_title,
+	.bx_catalog_text .bx_catalog_line_title a{
+		-webkit-transition: all 0.3s ease;
+		   -moz-transition: all 0.3s ease;
+		    -ms-transition: all 0.3s ease;
+		     -o-transition: all 0.3s ease;
+		 		transition: all 0.3s ease;
+	}
+	
+/* tile */
+
+.bx_catalog_tile{margin-bottom: 30px;}
+.bx_catalog_tile .bx_catalog_tile_category_title{
+	padding-bottom: 14px;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 24px;
+}
+.bx_catalog_tile .bx_catalog_tile_category_title a{
+	color: #000;
+	text-decoration: none;
+}
+
+.bx_catalog_tile .bx_catalog_tile_ul{padding: 0;}
+.bx_catalog_tile .bx_catalog_tile_ul li{
+	float: left;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+	margin-bottom: 20px;
+	padding: 0 10px;
+	width:12.5%;
+	list-style: none;
+	text-align: center;
+}
+.bx_catalog_tile .bx_catalog_tile_ul li:before {content: '' !important}
+.bx_catalog_tile .bx_catalog_tile_ul li:nth-child(8n+1){clear: both;}
+
+.bx_catalog_tile .bx_catalog_tile_img{
+	position: relative;
+	display: block;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 78px;
+	height: 78px;
+	border:1px solid #ccc;
+	border-radius: 2px;
+			background-color: #fff;
+			background-position: center;
+			background-repeat: no-repeat;
+	-webkit-background-size:contain;
+			background-size:contain;
+}
+.bx_catalog_tile .bx_catalog_tile_title{
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 0;
+	vertical-align: top;
+	line-height: 14px;
+}
+.bx_catalog_tile .bx_catalog_tile_title a{
+	color: #4c7da6;
+	font-size: 14px;
+}
+.bx_catalog_tile .bx_catalog_tile_title a:hover{text-decoration: none;}
+.bx_catalog_tile .bx_catalog_tile_title span{font-size: 12px;}
+
+
+
+
+/*2*/
+@media (max-width:980px){
+	.bx_catalog_tile .bx_catalog_tile_ul li{width:20%;}
+	.bx_catalog_tile .bx_catalog_tile_ul li:nth-child(8n+1){clear: none;}
+	.bx_catalog_tile .bx_catalog_tile_ul li:nth-child(5n+1){clear: both;}
+}
+/*3*/
+@media (max-width:639px) {
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_title{
+		margin-bottom: 5px;
+		line-height: 14px;
+	}
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_title a{font-size: 11px;}
+}
+@media (min-width:480px) and (max-width:639px) {
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_ul li{width:25%;}
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_ul li:nth-child(8n+1){clear: none;}
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_ul li:nth-child(4n+1){clear: both;}
+}
+/*4*/
+@media (max-width:479px) {
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_ul li{width:33.3%;}
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_img{
+		width: 100%;
+		height: 80px;
+	}
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_ul li:nth-child(8n+1){clear: none;}
+	.bx-touch .bx_catalog_tile .bx_catalog_tile_ul li:nth-child(3n+1){clear: both;}
+
+}
+
+
+	.bx_catalog_tile .bx_catalog_tile_title,
+	.bx_catalog_tile .bx_catalog_tile_title a,
+	.bx_catalog_tile .bx_catalog_tile_ul li,
+	.bx_catalog_tile .bx_catalog_tile_img{
+		-webkit-transition: all 0.3s ease;
+		   -moz-transition: all 0.3s ease;
+		    -ms-transition: all 0.3s ease;
+		     -o-transition: all 0.3s ease;
+		 		transition: all 0.3s ease;
+	}
+	
+/* list */
+
+.bx_sitemap{margin-bottom: 30px;}
+.bx_sitemap .bx_sitemap_title{
+	padding-bottom: 14px;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 24px;
+}
+.bx_sitemap .bx_sitemap_title a{
+	color: #000;
+	text-decoration: none;
+}
+
+.bx_sitemap .bx_sitemap_ul li{
+	padding: 0;
+	line-height: 14px;
+}
+.bx_sitemap .bx_sitemap_ul li:before {content: '' !important}
+.bx_sitemap .bx_sitemap_li_title{
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	font-weight: normal;
+	line-height: 13px;
+	margin-bottom: 10px;
+}
+.bx_sitemap .bx_sitemap_li_title a{
+	color: #4c7da6;
+	white-space: nowrap;
+	font-size: 13px;
+}
+.bx_sitemap .bx_sitemap_li_title a:hover{text-decoration: none}
+.bx_sitemap .bx_sitemap_li_title span{font-size: 11px;}
+
+@media (max-width:639px) {
+	.bx-touch .bx_sitemap .bx_catalog_line_title{
+		margin-bottom: 5px;
+		line-height: 12px;
+	}
+	.bx-touch .bx_sitemap .bx_catalog_line_title a{font-size: 12px;}
+}
+
+	.bx_sitemap .bx_catalog_line_title,
+	.bx_sitemap .bx_catalog_line_title a{
+		-webkit-transition: all 0.3s ease;
+		   -moz-transition: all 0.3s ease;
+		    -ms-transition: all 0.3s ease;
+		     -o-transition: all 0.3s ease;
+		 		transition: all 0.3s ease;
+	}
+/* End */
+/* /bitrix/templates/.default/components/bitrix/menu/catalog_vertical1/style.css?15001164971632 */
+/* /bitrix/templates/.default/components/bitrix/menu/catalog_vertical1/themes/blue/colors.min.css?1500109471498 */
+/* /bitrix/components/bitrix/catalog.sections.top/templates/.default/style.css?1499763929110 */
+/* /bitrix/components/bitrix/catalog.section.list/templates/.default/style.css?14997639297305 */
