@@ -71,7 +71,6 @@ elseif($obCache->StartDataCache())
     while ($productsPropsList = $productsProps->fetch()) {
         $arResult['PRODUCTS'][] = $productsPropsList;
     }
-    $prodCount = count($prodInfo);
     $productsPropsCount = count($arResult['PRODUCTS']);
 
     for($j=0; $j<$productsPropsCount; $j++) {
