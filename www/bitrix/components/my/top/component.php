@@ -14,68 +14,83 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 $obCache = new CPHPCache();
 $lifeTime = intval($arParams['CACHE_TIME']);
-$cacheId = md5(CUser::GetId());
+$cacheId = md5("topComponent/".$_SERVER['PHP_SELF']);
 $cachePath = '/'.$cacheId;
 
 if($obCache->InitCache($lifeTime, $cacheId, $cachePath))
 {
-   $vars = $obCache->GetVars();
-   extract($vars);
+    $vars = $obCache->GetVars();
+    extract($vars);
 }
 elseif($obCache->StartDataCache())
 {
-	// depth level
-	if (isset($arParams["MAX_LEVEL"]) && 1 < intval($arParams["MAX_LEVEL"]) && intval($arParams["MAX_LEVEL"]) < 5)
-		$arParams["MAX_LEVEL"] = intval($arParams["MAX_LEVEL"]);
-	else
-		$arParams["MAX_LEVEL"] = 1;
+    // depth level
+    if (isset($arParams["MAX_LEVEL"]) && 1 < intval($arParams["MAX_LEVEL"]) && intval($arParams["MAX_LEVEL"]) < 5){
+        $arParams["MAX_LEVEL"] = intval($arParams["MAX_LEVEL"]);
+    } else{
+        $arParams["MAX_LEVEL"] = 1;
+    }
 
-	$sections = $this->getSectionProps(
-		array(
-			"ID", 
-			"NAME", 
-			"DEPTH_LEVEL", 
-			"IBLOCK_SECTION_ID"
-		),
-		$arParams["IBLOCK_ID"]
-	);
+    $sections = $this->getSectionProps(
+        array(
+            "ID", 
+            "NAME", 
+            "DEPTH_LEVEL", 
+            "IBLOCK_SECTION_ID"
+        ),
+        $arParams["IBLOCK_ID"]
+    );
 
 
-	$products = CSaleBasket::GetList(
-		array(),
-		array("FUSER_ID" => CUser::GetId()),
-		false,
-		false,
-		array("NAME", "DETAIL_PAGE_URL")
-	);
+    $products = CSaleBasket::GetList(
+        array("NAME" => "ASC"),
+        array("USER_ID" => CUser::GetId(), "!ORDER_ID" => null),
+        false,
+        false,
+        array("NAME", "DETAIL_PAGE_URL", "QUANTITY")
+    );
 
-	$names = array();
-	while ($list = $products->fetch()) {
-		$names[$list['DETAIL_PAGE_URL']] = $list['NAME'];
-	}
-	$arFilter = Array("IBLOCK_ID"=>$arParams["IBLOCK_ID"], "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y", "NAME" => $names);
-	$arSelect = Array(
-		"IBLOCK_SECTION_ID", 
-		"NAME", 
-		"DETAIL_TEXT",
-		"DETAIL_PICTURE"
-	);
-	$productsProps = CIBlockElement::GetList(Array("IBLOCK_SECTION_ID"=>"ASC"), $arFilter, false, Array(), $arSelect);
+    $names = array();
+    while ($list = $products->fetch()) {
+        $prodInfo[] = array(
+            "NAME" => $list['NAME'], 
+            "DETAIL_PAGE_URL" => $list['DETAIL_PAGE_URL'], 
+            "QUANTITY" => $list['QUANTITY']
+        );
+        $names[] = $list['NAME'];
+    }
+    $arFilter = array("IBLOCK_ID"=>$arParams["IBLOCK_ID"], "NAME" => $names);
+    $arSelect = array(
+        "IBLOCK_SECTION_ID", 
+        "NAME", 
+        "DETAIL_TEXT",
+        "DETAIL_PICTURE"
+    );
+    $productsProps = CIBlockElement::GetList(array("IBLOCK_SECTION_ID"=>"ASC"), $arFilter, false, array("nPageSize"=>30), $arSelect);
 
-	$arResult['PRODUCTS'] = $productsProps->arResult;
+    while ($productsPropsList = $productsProps->fetch()) {
+        $arResult['PRODUCTS'][] = $productsPropsList;
+    }
+    $prodCount = count($prodInfo);
+    $productsPropsCount = count($arResult['PRODUCTS']);
 
-	foreach ($names as $url => $name)
-		for($i=0; $i<count($arResult['PRODUCTS']); $i++)
-			if($arResult['PRODUCTS'][$i]['NAME'] == $name)
-				$arResult['PRODUCTS'][$i]['DETAIL_PAGE_URL'] = $url;
-
-	while ($list = $productsProps->fetch()) {
-		if(!isset($sections[$list['IBLOCK_SECTION_ID']-1]['CNT_ORDER']))
-			$sections[$list['IBLOCK_SECTION_ID']-1]['CNT_ORDER'] = 1;
-		else $sections[$list['IBLOCK_SECTION_ID']-1]['CNT_ORDER']++;
-	}
-	$arResult['SECTIONS'] = $this->sortSectionRecursive($arParams['MAX_LEVEL'], $sections);
-	$obCache->EndDataCache(array('arResult' => $arResult));
+    for($j=0; $j<$productsPropsCount; $j++) {
+        foreach($prodInfo as $prodInfoItem) {
+            if($prodInfoItem['NAME'] == $arResult['PRODUCTS'][$j]['NAME']){
+                if(!isset($arResult['PRODUCTS'][$j]['QUANTITY'])){
+                    $arResult['PRODUCTS'][$j]['QUANTITY'] = $prodInfoItem['QUANTITY'];
+                } else {
+                    $arResult['PRODUCTS'][$j]['QUANTITY'] += $prodInfoItem['QUANTITY'];
+                }
+            }
+        }
+        if(!isset($sections[$arResult['PRODUCTS'][$j]['IBLOCK_SECTION_ID']-1]['CNT_ORDER'])){
+            $sections[$arResult['PRODUCTS'][$j]['IBLOCK_SECTION_ID']-1]['CNT_ORDER'] = $arResult['PRODUCTS'][$j]['QUANTITY'];
+        } else {
+            $sections[$arResult['PRODUCTS'][$j]['IBLOCK_SECTION_ID']-1]['CNT_ORDER'] += $arResult['PRODUCTS'][$j]['QUANTITY'];
+        }
+    }
+    $arResult['SECTIONS'] = $this->sortSectionRecursive($arParams['MAX_LEVEL'], $sections);
+    $obCache->EndDataCache(array('arResult' => $arResult));
 }
 $this->IncludeComponentTemplate();
-?>

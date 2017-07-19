@@ -1,5 +1,6 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-for($i = 0; $i<count($arResult['PRODUCTS']); $i++){
-	$arResult['PRODUCTS'][$i]['DETAIL_PICTURE'] = CFile::GetFileArray($arResult['PRODUCTS'][$i]['DETAIL_PICTURE']);
+$arItems = count($arResult['PRODUCTS']);
+for($i = 0; $i<$arItems; $i++){
+    $arResult['PRODUCTS'][$i]['DETAIL_PICTURE'] = CFile::GetFilearray($arResult['PRODUCTS'][$i]['DETAIL_PICTURE']);
 }
 ?>
