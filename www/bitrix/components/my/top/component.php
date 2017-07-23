@@ -14,7 +14,12 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 $obCache = new CPHPCache();
 $lifeTime = intval($arParams['CACHE_TIME']);
-$cacheId = md5("topComponent/".$_SERVER['PHP_SELF']);
+$cacheId = "topComponent/".$_SERVER['PHP_SELF'];
+foreach ($arParams as $key => $value) {
+    $cacheId .= ', '.$key.' = '.$value;
+}
+$cacheId .= \Bitrix\Sale\FUser::GetId();
+$cacheId = md5($cacheId);
 $cachePath = '/'.$cacheId;
 
 if($obCache->InitCache($lifeTime, $cacheId, $cachePath))
@@ -44,7 +49,7 @@ elseif($obCache->StartDataCache())
 
     $products = CSaleBasket::GetList(
         array("NAME" => "ASC"),
-        array("USER_ID" => CUser::GetId(), "!ORDER_ID" => null),
+        array("FUSER_ID" => \Bitrix\Sale\FUser::GetId(), "!ORDER_ID" => null),
         false,
         false,
         array("NAME", "DETAIL_PAGE_URL", "QUANTITY")
@@ -71,6 +76,7 @@ elseif($obCache->StartDataCache())
     while ($productsPropsList = $productsProps->fetch()) {
         $arResult['PRODUCTS'][] = $productsPropsList;
     }
+    
     $productsPropsCount = count($arResult['PRODUCTS']);
 
     for($j=0; $j<$productsPropsCount; $j++) {
